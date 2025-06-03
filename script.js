@@ -1,22 +1,16 @@
-function minDate(dates) {
-  const datesCopy = [...dates]; // avoid modifying the original array
-  return datesCopy.reduce((min, curr) => curr < min ? curr : min);
-}
-
 function findMinDate() {
-  const input = document.getElementById("dateInput").value;
+  const input = document.getElementById('dateInput').value;
   const dateArray = input
-    .split(",")
+    .split(',')
     .map(date => date.trim())
-    .filter(date => /^\d{4}\/\d{2}\/\d{2}$/.test(date)); // validate format
-
-  const resultElement = document.getElementById("result");
+    .filter(date => date); // remove empty strings
 
   if (dateArray.length === 0) {
-    resultElement.textContent = "Please enter valid dates in YYYY/MM/DD format.";
+    document.getElementById('result').innerText = "Please enter at least one date.";
     return;
   }
 
-  const min = minDate(dateArray);
-  resultElement.textContent = Earliest Date: ${min};
+  // Compare date strings directly because they're in YYYY/MM/DD format
+  const minDate = dateArray.reduce((min, curr) => curr < min ? curr : min);
+  document.getElementById('result').innerText = `Earliest Date: ${minDate}`;
 }
